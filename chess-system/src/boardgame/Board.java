@@ -26,11 +26,11 @@ public class Board {
 		this.columns = columns;
 	}
 	
-	public Piece piece(int row, int column) {
+	public Piece getPiece(int row, int column) {
 		return this.pieces[row][column];
 	}
 	
-	public Piece piece(Position position) {
+	public Piece getPiece(Position position) {
 		return this.pieces[position.getRow()][position.getColumn()];
 	}
 }
