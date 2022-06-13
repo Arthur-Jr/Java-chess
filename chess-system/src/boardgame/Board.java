@@ -27,7 +27,7 @@ public class Board {
 	}
 	
 	public Piece getPiece(Position position) throws BoardException {
-		if (this.positionExists(position)) {
+		if (!this.positionExists(position)) {
 			throw new BoardException("Invalid Position");
 		}
 		
@@ -35,7 +35,7 @@ public class Board {
 	}
 	
 	public void placePiece(Piece piece, Position position) throws BoardException {
-		if (this.positionExists(position)) {
+		if (this.thereIsAPiece(position)) {
 			throw new BoardException("Invalid Position");
 		}
 		
@@ -52,8 +52,8 @@ public class Board {
 	}
 	
 	public boolean thereIsAPiece(Position position) throws BoardException {
-		if (this.positionExists(position)) {
-			throw new BoardException("Invalid Position");
+		if (!this.positionExists(position)) {
+			throw new BoardException("There is already a piece on position " + position);
 		}
 		
 		return this.getPiece(position) != null;
