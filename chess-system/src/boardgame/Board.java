@@ -14,28 +14,48 @@ public class Board {
 		return rows;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-
 	public int getColumns() {
 		return columns;
 	}
-
-	public void setColumns(int columns) {
-		this.columns = columns;
-	}
 	
-	public Piece getPiece(int row, int column) {
+	public Piece getPiece(int row, int column) throws BoardException {
+		if (!this.checkPostions(row, column)) {
+			throw new BoardException("Invalid Position");
+		}
+		
 		return this.pieces[row][column];
 	}
 	
-	public Piece getPiece(Position position) {
+	public Piece getPiece(Position position) throws BoardException {
+		if (this.positionExists(position)) {
+			throw new BoardException("Invalid Position");
+		}
+		
 		return this.pieces[position.getRow()][position.getColumn()];
 	}
 	
-	public void placePiece(Piece piece, Position position) {
+	public void placePiece(Piece piece, Position position) throws BoardException {
+		if (this.positionExists(position)) {
+			throw new BoardException("Invalid Position");
+		}
+		
 		this.pieces[position.getRow()][position.getColumn()] = piece;
 		piece.position = position;
+	}
+	
+	private boolean checkPostions(int row, int col) {
+		 return row >= 0 && row < this.rows && col >= 0 && col < this.columns;
+	}
+	
+	public boolean positionExists(Position position) {
+		return this.checkPostions(position.getRow(), position.getColumn());
+	}
+	
+	public boolean thereIsAPiece(Position position) throws BoardException {
+		if (this.positionExists(position)) {
+			throw new BoardException("Invalid Position");
+		}
+		
+		return this.getPiece(position) != null;
 	}
 }
