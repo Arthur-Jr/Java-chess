@@ -36,11 +36,22 @@ public class Board {
 	
 	public void placePiece(Piece piece, Position position) throws BoardException {
 		if (this.thereIsAPiece(position)) {
-			throw new BoardException("Invalid Position");
+			throw new BoardException("There is already a piece on position " + position);
 		}
 		
 		this.pieces[position.getRow()][position.getColumn()] = piece;
 		piece.position = position;
+	}
+	
+	public Piece removePiece(Position position) {
+		if (!this.thereIsAPiece(position)) {
+			return null;
+		}
+		
+		Piece pieceToRemove = this.getPiece(position);
+		pieceToRemove.position = null;
+		this.pieces[position.getRow()][position.getColumn()] = null;
+		return pieceToRemove;
 	}
 	
 	private boolean checkPostions(int row, int col) {
@@ -53,7 +64,7 @@ public class Board {
 	
 	public boolean thereIsAPiece(Position position) throws BoardException {
 		if (!this.positionExists(position)) {
-			throw new BoardException("There is already a piece on position " + position);
+			throw new BoardException("Invalid Position");
 		}
 		
 		return this.getPiece(position) != null;
