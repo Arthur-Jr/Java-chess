@@ -22,46 +22,46 @@ public final class Rock extends ChessPiece {
 		
 		// white piece POV: up
 		positionToMove.setPosition(this.position.getRow() - 1, this.position.getColumn());
-		while (!this.getBoard().thereIsAPiece(positionToMove) && this.getBoard().positionExists(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+		while (this.getBoard().positionExists(positionToMove) && !this.getBoard().thereIsAPiece(positionToMove)) {
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setRow(positionToMove.getRow() - 1);
 		}
 		
 		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 		}
 		
 		// white piece POV: left
 		positionToMove.setPosition(this.position.getRow(), this.position.getColumn() - 1);
-		while (!this.getBoard().thereIsAPiece(positionToMove) && this.getBoard().positionExists(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+		while (this.getBoard().positionExists(positionToMove) && !this.getBoard().thereIsAPiece(positionToMove)) {
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setColumn(positionToMove.getColumn() - 1);
 		}
 		
 		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 		}
 		
 		// white piece POV: right
 		positionToMove.setPosition(this.position.getRow(), this.position.getColumn() + 1);
-		while (!this.getBoard().thereIsAPiece(positionToMove) && this.getBoard().positionExists(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+		while (this.getBoard().positionExists(positionToMove) && !this.getBoard().thereIsAPiece(positionToMove)) {
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setColumn(positionToMove.getColumn() + 1);
 		}
 		
 		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 		}
-		
+	
 		// white piece POV: down
 		positionToMove.setPosition(this.position.getRow() + 1, this.position.getColumn());
-		while (!this.getBoard().thereIsAPiece(positionToMove) && this.getBoard().positionExists(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+		while (this.getBoard().positionExists(positionToMove) && !this.getBoard().thereIsAPiece(positionToMove) ) {
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setRow(positionToMove.getRow() + 1);
 		}
 		
 		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][position.getColumn()] = true;
+			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 		}
 		
 		return moves;
