@@ -42,16 +42,31 @@ public class UI {
 			System.out.print(ANSI_BLUE + (8 - row) + " " + ANSI_RESET);
 			
 			for (int col = 0; col < pieces.length; col += 1) {
-				printPiece(pieces[row][col]);
+				printPiece(pieces[row][col], false);
 			}
 			System.out.println();
 		}
 		System.out.println(ANSI_BLUE + "  a b c d e f g h" + ANSI_RESET);
 	}
 	
-	private static void printPiece(ChessPiece piece) {
+	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+		for (int row = 0; row < pieces.length; row += 1) {
+			System.out.print((8 - row) + " ");
+			for (int col = 0; col < pieces.length; col += 1) {
+				printPiece(pieces[row][col], possibleMoves[row][col]);
+			}
+			System.out.println();
+		}
+		System.out.println("  a b c d e f g h");
+	}
+	
+	private static void printPiece(ChessPiece piece, boolean backgroundCondition) {
+		if (backgroundCondition) {
+			System.out.print(ANSI_CYAN_BACKGROUND);
+		}
+		
 		if (piece == null) {
-			System.out.print("-");
+			System.out.print("-" + ANSI_RESET);
 		} else {
             if (piece.getColor() == Color.WHITE) {
                 System.out.print(ANSI_WHITE + piece + ANSI_RESET);
