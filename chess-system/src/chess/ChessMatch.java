@@ -1,6 +1,8 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
+import boardgame.Position;
 import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Knight;
@@ -31,6 +33,23 @@ public class ChessMatch {
 		this.board.placePiece(piece, new ChessPosition(col, row).toPosition());
 	}
 	
+	public ChessPiece performMove(ChessPosition sourcePostion, ChessPosition targetPostion) {
+		Position source = sourcePostion.toPosition();
+		Position target = targetPostion.toPosition();
+		
+		this.validateSourcePosition(source);
+		
+		return (ChessPiece)this.makeMove(source, target);
+	}
+	
+	private Piece makeMove(Position sourcePosition, Position targetPostion) {
+		Piece pieceToMove = this.board.removePiece(sourcePosition);
+		Piece capturedPiece = this.board.removePiece(targetPostion);
+		this.board.placePiece(pieceToMove, targetPostion);
+		
+		return capturedPiece;
+	}
+	
 	private void initialSetup() {
 		placePiece('a', 1, new Rock(board, Color.WHITE));
 		placePiece('b', 1, new Knight(board, Color.WHITE));
@@ -54,6 +73,12 @@ public class ChessMatch {
 		placePiece('h', 8, new Rock(board, Color.BLACK));
 		for (int i = 0; i < this.getPieces().length; i += 1) {
 			placePiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
+		}
+	}
+	
+	private void validateSourcePosition(Position position) {
+		if (!this.board.thereIsAPiece(position)) {
+			throw new ChessException("There is no piece on source position");
 		}
 	}
 }
