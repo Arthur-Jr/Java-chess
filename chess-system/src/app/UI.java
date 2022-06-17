@@ -51,13 +51,14 @@ public class UI {
 	
 	public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
 		for (int row = 0; row < pieces.length; row += 1) {
-			System.out.print((8 - row) + " ");
+			System.out.print(ANSI_BLUE + (8 - row) + " " + ANSI_RESET);
+
 			for (int col = 0; col < pieces.length; col += 1) {
 				printPiece(pieces[row][col], possibleMoves[row][col]);
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.println(ANSI_BLUE + "  a b c d e f g h" + ANSI_RESET);
 	}
 	
 	private static void printPiece(ChessPiece piece, boolean backgroundCondition) {
