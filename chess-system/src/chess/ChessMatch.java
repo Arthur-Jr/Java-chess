@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -14,11 +17,15 @@ public class ChessMatch {
 	private Board board;
 	private int turn;
 	private Color currentPlayer;
+	private List<Piece> piecesOnBoard, capturedPieces;
 
 	public ChessMatch() {
 		this.board = new Board(8, 8);
-		this.initialSetup();
+		this.turn = 1;
 		this.currentPlayer = Color.WHITE;
+		this.piecesOnBoard = new ArrayList<>();
+		this.capturedPieces = new ArrayList<>();
+		this.initialSetup();
 	}
 	
 	public int getTurn() {
@@ -42,6 +49,7 @@ public class ChessMatch {
 	
 	private void placePiece(char col, int row, ChessPiece piece) {
 		this.board.placePiece(piece, new ChessPosition(col, row).toPosition());
+		this.piecesOnBoard.add(piece);
 	}
 	
 	public ChessPiece performMove(ChessPosition sourcePostion, ChessPosition targetPostion) {
@@ -60,6 +68,11 @@ public class ChessMatch {
 		Piece capturedPiece = this.board.removePiece(targetPostion);
 		this.board.placePiece(pieceToMove, targetPostion);
 		
+		if (capturedPiece != null) {
+			this.piecesOnBoard.remove(capturedPiece);
+			this.capturedPieces.add(capturedPiece);
+		}
+		
 		return capturedPiece;
 	}
 	
@@ -77,28 +90,28 @@ public class ChessMatch {
 	
 	private void initialSetup() {
 		placePiece('a', 1, new Rock(board, Color.WHITE));
-		placePiece('b', 1, new Knight(board, Color.WHITE));
-		placePiece('c', 1, new Bishop(board, Color.WHITE));
-		placePiece('d', 1, new Queen(board, Color.WHITE));
+//		placePiece('b', 1, new Knight(board, Color.WHITE));
+//		placePiece('c', 1, new Bishop(board, Color.WHITE));
+//		placePiece('d', 1, new Queen(board, Color.WHITE));
 		placePiece('e', 1, new King(board, Color.WHITE));
-		placePiece('f', 1, new Bishop(board, Color.WHITE));
-		placePiece('g', 1, new Knight(board, Color.WHITE));
+//		placePiece('f', 1, new Bishop(board, Color.WHITE));
+//		placePiece('g', 1, new Knight(board, Color.WHITE));
 		placePiece('h', 1, new Rock(board, Color.WHITE));
-		for (int i = 0; i < this.getPieces().length; i += 1) {
-			placePiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
-		}
+//		for (int i = 0; i < this.getPieces().length; i += 1) {
+//			placePiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
+//		}
 		
 		placePiece('a', 8, new Rock(board, Color.BLACK));
-		placePiece('b', 8, new Knight(board, Color.BLACK));
-		placePiece('c', 8, new Bishop(board, Color.BLACK));
-		placePiece('d', 8, new Queen(board, Color.BLACK));
+//		placePiece('b', 8, new Knight(board, Color.BLACK));
+//		placePiece('c', 8, new Bishop(board, Color.BLACK));
+//		placePiece('d', 8, new Queen(board, Color.BLACK));
 		placePiece('e', 8, new King(board, Color.BLACK));
-		placePiece('f', 8, new Bishop(board, Color.BLACK));
-		placePiece('g', 8, new Knight(board, Color.BLACK));
+//		placePiece('f', 8, new Bishop(board, Color.BLACK));
+//		placePiece('g', 8, new Knight(board, Color.BLACK));
 		placePiece('h', 8, new Rock(board, Color.BLACK));
-		for (int i = 0; i < this.getPieces().length; i += 1) {
-			placePiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
-		}
+//		for (int i = 0; i < this.getPieces().length; i += 1) {
+//			placePiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
+//		}
 	}
 	
 	private void validateSourcePosition(Position position) {
