@@ -18,7 +18,7 @@ public class ChessMatch {
 	private Board board;
 	private int turn;
 	private Color currentPlayer;
-	private boolean check;
+	private boolean check, checkMate;
 	private List<Piece> piecesOnBoard, capturedPieces;
 
 	public ChessMatch() {
@@ -40,6 +40,10 @@ public class ChessMatch {
 	
 	public boolean getCheckStatus() {
 		return this.check;
+	}
+	
+	public boolean getCheckMateStatus() {
+		return this.checkMate;
 	}
 	
 	public ChessPiece[][] getPieces() {
@@ -66,14 +70,19 @@ public class ChessMatch {
 		this.validateTargetPosition(source, target);
 		ChessPiece capturedPiece = (ChessPiece)this.makeMove(source, target);
 		
-		if(this.testCheck(currentPlayer)) {
+		if (this.testCheck(currentPlayer)) {
 			this.undoMove(source, target, capturedPiece);
 			throw new ChessException("You can't put yourself in check");
 		}
 		
 		this.check = this.testCheck(this.opponent(currentPlayer));
 		
-		this.nextTurn();
+		if (this.testCheckMate(this.opponent(currentPlayer))) {
+			this.checkMate = true; 
+		} else {
+			this.nextTurn();			
+		}
+		
 		return capturedPiece;
 	}
 	
@@ -137,6 +146,33 @@ public class ChessMatch {
 			}
 		}
 		return false;
+	}
+	
+	private boolean testCheckMate(Color color) {
+		if (!this.testCheck(color)) {
+			return false;
+		}
+		
+		List<Piece> playerPieces = this.piecesOnBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+		for (Piece piece : playerPieces) {
+			boolean[][] pieceMoves = piece.possibleMoves();
+			for (int row = 0; row < this.board.getRows(); row += 1) {
+				for (int col = 0; col < this.board.getColumns(); col += 1) {
+					if (pieceMoves[row][col]) {
+						Position source = ((ChessPiece)piece).getChessPosition().toPosition();
+						Position target = new Position(row, col);
+						Piece capturedPiece = this.makeMove(source, target);
+						boolean checkTest = this.testCheck(color);
+						this.undoMove(source, target, capturedPiece);
+						
+						if (!checkTest) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	private void initialSetup() {
