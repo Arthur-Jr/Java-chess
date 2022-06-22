@@ -186,9 +186,9 @@ public class ChessMatch {
 //		placePiece('f', 1, new Bishop(board, Color.WHITE));
 //		placePiece('g', 1, new Knight(board, Color.WHITE));
 		placePiece('h', 1, new Rock(board, Color.WHITE));
-//		for (int i = 0; i < this.getPieces().length; i += 1) {
-//			placePiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
-//		}
+		for (int i = 0; i < this.getPieces().length; i += 1) {
+			placePiece((char)('a' + i), 2, new Pawn(board, Color.WHITE));
+		}
 		
 		placePiece('a', 8, new Rock(board, Color.BLACK));
 //		placePiece('b', 8, new Knight(board, Color.BLACK));
@@ -198,9 +198,9 @@ public class ChessMatch {
 //		placePiece('f', 8, new Bishop(board, Color.BLACK));
 //		placePiece('g', 8, new Knight(board, Color.BLACK));
 		placePiece('h', 8, new Rock(board, Color.BLACK));
-//		for (int i = 0; i < this.getPieces().length; i += 1) {
-//			placePiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
-//		}
+		for (int i = 0; i < this.getPieces().length; i += 1) {
+			placePiece((char)('a' + i), 7, new Pawn(board, Color.BLACK));
+		}
 	}
 	
 	private void validateSourcePosition(Position position) {
