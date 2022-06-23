@@ -15,6 +15,12 @@ public final class Rock extends ChessPiece {
 		return "R";
 	}
 	
+	private void takeOpponentPiece(Position position, boolean[][] moves) {
+		if(this.getBoard().positionExists(position) && this.isThereOpponentPiece(position)) {
+			moves[position.getRow()][position.getColumn()] = true;
+		}
+	}
+	
 	@Override
 	public final boolean[][] possibleMoves() {
 		boolean[][] moves = new boolean[this.getBoard().getRows()][this.getBoard().getColumns()];
@@ -26,10 +32,7 @@ public final class Rock extends ChessPiece {
 			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setRow(positionToMove.getRow() - 1);
 		}
-		
-		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
-		}
+		this.takeOpponentPiece(positionToMove, moves);
 		
 		// white piece POV: left
 		positionToMove.setPosition(this.position.getRow(), this.position.getColumn() - 1);
@@ -37,10 +40,7 @@ public final class Rock extends ChessPiece {
 			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setColumn(positionToMove.getColumn() - 1);
 		}
-		
-		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
-		}
+		this.takeOpponentPiece(positionToMove, moves);
 		
 		// white piece POV: right
 		positionToMove.setPosition(this.position.getRow(), this.position.getColumn() + 1);
@@ -48,10 +48,7 @@ public final class Rock extends ChessPiece {
 			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setColumn(positionToMove.getColumn() + 1);
 		}
-		
-		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
-		}
+		this.takeOpponentPiece(positionToMove, moves);
 	
 		// white piece POV: down
 		positionToMove.setPosition(this.position.getRow() + 1, this.position.getColumn());
@@ -59,10 +56,7 @@ public final class Rock extends ChessPiece {
 			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
 			positionToMove.setRow(positionToMove.getRow() + 1);
 		}
-		
-		if(this.getBoard().positionExists(positionToMove) && this.isThereOpponentPiece(positionToMove)) {
-			moves[positionToMove.getRow()][positionToMove.getColumn()] = true;
-		}
+		this.takeOpponentPiece(positionToMove, moves);
 		
 		return moves;
 	}
